@@ -1,24 +1,43 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```mermaid
+classDiagram
+    class Usuario {
+        +id: bigint
+        +nome: string
+        +email: string
+        +senha_digest: string
+        +created_at: datetime
+        +updated_at: datetime
+    }
 
-Things you may want to cover:
+    class Montagem {
+        +id: bigint
+        +usuario_id: bigint
+        +nome: string
+        +descricao: text
+        +valor_total: decimal
+        +created_at: datetime
+        +updated_at: datetime
+    }
 
-* Ruby version
+    class Componente {
+        +id: bigint
+        +montagem_id: bigint
+        +tipo: string
+        +nome: string
+        +marca: string
+        +preco: decimal
+        +quantidade: integer
+        +created_at: datetime
+        +updated_at: datetime
+    }
 
-* System dependencies
+    Usuario "1" --> "N" Montagem : possui
+    Montagem "1" --> "N" Componente : contem
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Relacionamentos
+- `Usuario` tem muitas `Montagens`
+- `Montagem` pertence a `Usuario`
+- `Montagem` tem muitos `Componentes`
+- `Componente` pertence a `Montagem`
