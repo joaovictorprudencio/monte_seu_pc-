@@ -5,14 +5,13 @@ classDiagram
         +id: bigint
         +nome: string
         +email: string
-        +senha_digest: string
+        +senha: string
         +created_at: datetime
         +updated_at: datetime
     }
 
-    class Montagem {
+    class Computador {
         +id: bigint
-        +usuario_id: bigint
         +nome: string
         +descricao: text
         +valor_total: decimal
@@ -22,8 +21,9 @@ classDiagram
 
     class Componente {
         +id: bigint
-        +montagem_id: bigint
+        +computador_id: bigint
         +tipo: string
+        +arqt: string
         +nome: string
         +marca: string
         +preco: decimal
@@ -32,12 +32,9 @@ classDiagram
         +updated_at: datetime
     }
 
-    Usuario "1" --> "N" Montagem : possui
-    Montagem "1" --> "N" Componente : contem
+
+   
+    Computador "N" --> "N" Componente : Possui  
+
 ```
 
-## Relacionamentos
-- `Usuario` tem muitas `Montagens`
-- `Montagem` pertence a `Usuario`
-- `Montagem` tem muitos `Componentes`
-- `Componente` pertence a `Montagem`
