@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @computer %>
+
+<div>
+  <%= link_to "Edit this computer", edit_computer_path(@computer) %> |
+  <%= link_to "Back to computers", computers_path %>
+
+  <%= button_to "Destroy this computer", @computer, method: :delete %>
+</div>
