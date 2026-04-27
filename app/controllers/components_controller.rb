@@ -64,6 +64,6 @@ class ComponentsController < ApplicationController
     end
 
     def component_params
-      params.expect(component: [ :name, :brand, :computer_id, :category, :architecture, :price ])
+      params.expect(component: [ :name, :brand,  :category, :architecture, :price, :image ])
     end
 end
