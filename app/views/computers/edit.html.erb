@@ -1,12 +1,19 @@
-<% content_for :title, "Editing computer" %>
+<% content_for :title, "Editar montagem" %>
 
-<h1>Editing computer</h1>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h1>Editar montagem</h1>
+      <p class="subtitle">Atualize as informações do computador</p>
+    </div>
 
-<%= render "form", computer: @computer %>
+    <div class="card-body">
+      <%= render "form", computer: @computer %>
+    </div>
 
-<br>
-
-<div>
-  <%= link_to "Show this computer", @computer %> |
-  <%= link_to "Back to computers", computers_path %>
+    <div class="card-footer">
+      <%= link_to "← Voltar", computers_path, class: "btn btn-secondary" %>
+      <%= link_to "Ver montagem", @computer, class: "btn btn-primary" %>
+    </div>
+  </div>
 </div>
