@@ -1,11 +1,25 @@
 class Computer < ApplicationRecord
-  def assemble_computer
-    @componentsList = []
-    @tipe_component = []
+
+   has_many :computer_parts
+   has_many :components, through: :computer_parts
+
+
+  def total_price=(value)
+    if value.is_a?(String) && value.include?(",")
+      clean_value = value.gsub(/[R$\s.]/, '').gsub(',', '.')
+      super(clean_value)
+    else
+      super(value)
+    end
   end
 
-  def add_part(computer_id, component_id)
-    @computer = findy(computer_id)
-    @par_exist = @computer.component_id
+
+  def create_moutinng()
+
   end
+
+ 
+
+
+  
 end
