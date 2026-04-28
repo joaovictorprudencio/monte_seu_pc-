@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    render "pages/home/index"
+    render "/home/index"
   end
 end
