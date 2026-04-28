@@ -1,10 +1,212 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+@import "bootstrap/scss/bootstrap";
+
+body {
+  background: #0f172a; /* fundo geral escuro */
+  color: #e5e7eb;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.notice {
+  color: #22c55e;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* CARD */
+.card {
+  background: #1f2937; /* cinza escuro */
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+
+/* HEADER */
+.card-header {
+  padding: 20px;
+  border-bottom: 1px solid #374151;
+}
+
+.card-header h1 {
+  margin: 0;
+  color: #a5a5a5; /* verde destaque */
+}
+
+/* BODY */
+.card-body {
+  padding: 20px;
+}
+
+/* FOOTER */
+.card-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #374151;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions-right {
+  display: flex;
+  gap: 10px;
+}
+
+/* BOTÕES */
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Verde principal */
+.btn-primary {
+  background: #16a34a;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #15803d;
+}
+
+/* Cinza */
+.btn-secondary {
+  background: #374151;
+  color: #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
+}
+
+/* Vermelho (delete) */
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* INPUT */
+.input {
+  width: 90%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+  background: #111827;
+  color: #e5e7eb;
+  outline: none;
+  transition: 0.2s;
+  margin-right: 7%;
+}
+
+/* foco verde */
+.input:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
+}
+
+/* erro */
+.form-error {
+  background: #7f1d1d;
+  border: 1px solid #dc2626;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  color: #fecaca;
+}
+
+/* botão */
+.form-actions {
+  margin-top: 20px;
+}
+
+.notice {
+  color: #22c55e;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* CARD ITEM */
+.card-item {
+  background: #1f2937;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  transition: 0.2s;
+  margin-top: 5%;
+}
+
+.card-item:hover {
+  transform: translateY(-4px);
+}
+
+/* ACTIONS */
+.card-actions {
+  margin-top: 12px;
+}
+
+/* BOTÕES */
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: #16a34a;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #15803d;
+}
+
+.btn-secondary {
+  background: #374151;
+  color: #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
+}
