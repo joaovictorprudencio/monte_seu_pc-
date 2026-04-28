@@ -37,7 +37,7 @@ class ComputersController < ApplicationController
   def update
     respond_to do |format|
       if @computer.update(computer_params)
-        format.html { redirect_to @computer, notice: "Computer was successfully updated.", status: :see_other }
+        format.html { redirect_to @computer, notice: "Informações de maquina atualizdas com sucesso", status: :see_other }
         format.json { render :show, status: :ok, location: @computer }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -63,6 +63,6 @@ class ComputersController < ApplicationController
 
 
     def computer_params
-      params.expect(computer: [ :name, :string, :description, :text, :total_price ])
+      params.expect(computer: [ :name, :description, :type_of_use, :total_price => 0.0 ])
     end
 end

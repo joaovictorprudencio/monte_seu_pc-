@@ -1,8 +1,8 @@
 <%= form_with(model: computer) do |form| %>
-  <% if computer.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(computer.errors.count, "error") %> prohibited this computer from being saved:</h2>
 
+  <% if computer.errors.any? %>
+    <div class="form-error">
+      <h2><%= pluralize(computer.errors.count, "erro") %> impediram o salvamento:</h2>
       <ul>
         <% computer.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,32 +11,31 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, "Nome da montagem", class: "form-label" %>
+    <%= form.text_field :name, class: "input" %>
   </div>
 
-  <div>
-    <%= form.label :string, style: "display: block" %>
-    <%= form.text_field :string %>
+  <div class="form-group">
+    <%= form.label :description, "Descrição da montagem", class: "form-label" %>
+    <%= form.text_field :description, class: "input" %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
+  <div class="form-group">
+    <%= form.label :type_of_use, "Tipo de uso", class: "form-label" %>
+    <%= form.text_field :type_of_use, class: "input" %>
   </div>
 
-  <div>
-    <%= form.label :text, style: "display: block" %>
-    <%= form.text_field :text %>
+  <div class="form-group">
+    <%= form.label :total_price, "Preço total da máquina", class: "form-label" %>
+    <%= form.text_field :total_price, 
+      class: "input", 
+      data: { controller: "mask" },
+      value: format_currency(computer.total_price) %>
   </div>
 
-  <div>
-    <%= form.label :total_price, style: "display: block" %>
-    <%= form.text_field :total_price %>
+  <div class="form-actions">
+    <%= form.submit "Salvar montagem", class: "btn btn-primary" %>
   </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>
