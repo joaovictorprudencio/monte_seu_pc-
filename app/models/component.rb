@@ -1,4 +1,9 @@
 class Component < ApplicationRecord
-  belongs_to :computer
-  belongs_to :component
+  has_many :computer_parts
+  has_many :computers, through: :computer_parts
+  has_one_attached :image
+
+
+
 end
+   
