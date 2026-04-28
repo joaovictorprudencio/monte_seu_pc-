@@ -24,7 +24,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="d-flex flex-column min-vh-100">
+    <main class="flex-fill">
+      <%= yield %>
+    </main>
+    <footer class="footer mt-auto">
+      <div class="container">
+        <span>&copy; 2026 PC Builder Pro. Todos os direitos reservados.</span>
+      </div>
+    </footer>
   </body>
 </html>
