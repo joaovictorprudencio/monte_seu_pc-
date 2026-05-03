@@ -28,7 +28,7 @@ class Computer < ApplicationRecord
 
   
 
-  def change_part (componente, new_componente)
+  def change_part(componente, new_componente)
     computer_part = computer_parts.find_by(component_id: componente.id)
 
     unless computer_part
@@ -40,6 +40,35 @@ class Computer < ApplicationRecord
 
     computer_part.update(component_id: new_componente.id)
   end
+
+
+  
+
+  def save_hash(component)
+    self.data = {
+      name: self.name,
+      description: self.description,
+      type_of_use: self.type_of_use,
+      total_price: self.total_price,
+    }
+
+    case component.category
+    when "CPU"
+      self.data[:CPU] = component.name
+    when "MOTHERBOARD"
+      cpu = component.findy_by(component_id: component.id)
+      self.data[:MOTHERBOARD] = component.name  
+    when "GPU"
+      self.data[:GPU] = component.name
+    when "SOURCE"
+      self.data[:SOURCE] = component.name
+    when "STORAGE"
+      self.data[:STORAGE] = component.name
+    when "RAM"
+      self.data[:RAM] = component.name
+    end  
+  end
+
 
   
 
