@@ -42,7 +42,40 @@ class Computer < ApplicationRecord
   end
 
 
-  
+  def validate_compatibility(component)
+
+    
+    case component.category
+    when "CPU"
+      motherboard = components.find_by(category: "MOTHERBOARD")
+
+      unless motherboard
+         raise ActiveRecord::RecordNotFound, "Placa-mãe não encontrada"
+      end
+
+      if  motherboard.socket != component.socket || motherboard.arvhitecture != component.architecture
+        raise "Incompatibilidade: A CPU não é compatível com a placa-mãe."
+      end
+
+
+    when "MOTHERBOARD"
+      cpu = components.find_by(category: "CPU")
+      if cpu && cpu.socket != component.socket
+        raise "Incompatibilidade: A placa-mãe não é compatível com a CPU."
+      end
+    when "GPU"
+      source = components.find_by(category: "SOURCE")
+      if source && source.wattage < component.wattage
+        raise "Incompatibilidade: A fonte de alimentação não tem potência suficiente para a GPU."
+      end
+    when "RAM"
+      motherboard = components.find_by(category: "MOTHERBOARD")
+      if motherboard && motherboard.ram_type != component.ram_type
+        raise "Incompatibilidade: O tipo de RAM não é compatível com a placa-mãe."
+      end
+    end
+
+  end
 
   def save_hash(component)
     self.data = {
