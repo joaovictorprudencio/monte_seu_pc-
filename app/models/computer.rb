@@ -43,23 +43,22 @@ class Computer < ApplicationRecord
 
 
   def validate_compatibility(component)
-
+ 
+    motherboard = self.computer_parts.findy_by(category: "MOTHERBOARD")
+    cpu = self.computer_parts.find_by(category: "CPU")
     
     case component.category
     when "CPU"
-      motherboard = self.computer_parts.findy_by(category: "MOTHERBOARD")
-
+     
       unless motherboard
          raise ActiveRecord::RecordNotFound, "Placa-mãe não encontrada"
       end
 
-      if  motherboard.socket != component.socket || motherboard.arvhitecture != component.architecture
+      if  motherboard.socket != component.socket || motherboard.arvhitecture != component.architecture 
         raise "Incompatibilidade: A CPU não é compatível com a placa-mãe."
       end
 
     when "MOTHERBOARD"
-      cpu = self.computer_parts.find_by(category: "CPU")
-      motherboard = self.computer_parts.find_by(category: "MOTHERBOARD")
 
       unless motherboard
         if component.socket != cpu.socket || component.architecture != cpu.architecture
@@ -71,17 +70,19 @@ class Computer < ApplicationRecord
         raise "Incompatibilidade: A placa-mãe não é compatível com a CPU."
       end
 
-    when "GPU"
-      source = self.computer_parts.find_by(category: "SOURCE")
-      if source && source.wattage < component.wattage
-        raise "Incompatibilidade: A fonte de alimentação não tem potência suficiente para a GPU."
-      end
     when "RAM"
-      motherboard = self.computer_parts.find_by(component_id: component.id)
       if motherboard && motherboard.ram_type != component.ram_type
         raise "Incompatibilidade: O tipo de RAM não é compatível com a placa-mãe."
       end
     end
+
+  when "CASE"
+    unless motherboard
+      if component.form_factor != motherboard.form_factor
+        raise "Incompatibilidade: O gabinete não é compatível com a placa-mãe."
+      end
+    end
+  end
 
   end
 
