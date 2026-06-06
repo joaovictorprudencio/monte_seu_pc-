@@ -18,6 +18,10 @@ development:
   <<: *default
   database: mt_seu_pc
 
+test:
+  <<: *default
+  database: mt_seu_pc_test    
+
 
 
 
