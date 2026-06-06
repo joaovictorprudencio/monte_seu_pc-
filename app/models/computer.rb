@@ -2,6 +2,8 @@ class Computer < ApplicationRecord
   has_many :computer_parts
   has_many :components, through: :computer_parts
   validates :components, compatibility: true
+  validates :total_price, presence: true
+  
 
   def total_price=(value)
     if value.is_a?(String) && value.include?(",")
