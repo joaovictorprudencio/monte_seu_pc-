@@ -3,7 +3,7 @@ class Computer < ApplicationRecord
   has_many :components, through: :computer_parts
   validates :components, compatibility: true
   validates :total_price, presence: true
-  
+  validates :name, presence: true
 
   def total_price=(value)
     if value.is_a?(String) && value.include?(",")
@@ -25,8 +25,6 @@ class Computer < ApplicationRecord
     update(total_price + price)
   end
 
-  
-
   def change_part(componente, new_componente)
     computer_part = computer_parts.find_by(component_id: componente.id)
 
@@ -35,10 +33,7 @@ class Computer < ApplicationRecord
     update(total_price: new_price)
 
     computer_part.update(component_id: new_componente.id)
-
   end
-
-
 
   def save_hash(component)
     data = {
@@ -52,7 +47,7 @@ class Computer < ApplicationRecord
     when "CPU"
       data[:CPU] = component.name
     when "MOTHERBOARD"
-      data[:MOTHERBOARD] = component.name  
+      data[:MOTHERBOARD] = component.name
     when "GPU"
       data[:GPU] = component.name
     when "SOURCE"
@@ -61,13 +56,8 @@ class Computer < ApplicationRecord
       data[:STORAGE] = component.name
     when "RAM"
       data[:RAM] = component.name
-    end  
+    end
 
     save
   end
-
-
-  
-
-  
-end 
+end
