@@ -26,12 +26,12 @@ class CompatibilityValidator < ActiveModel::EachValidator
         end
 
         if ram && component.ram_type != ram.ram_type
-          record.errors.add(:base, "Incompatibilidade: A placa-mãe não é compatível com Processador.")
+          record.errors.add(:base, "Incompatibilidade: A placa-mãe não é compatível com a memória ram")
         end
 
 
         if case_component && component.form_factor != case_component.form_factor
-          record.errors.add(base: "Incompatibilidade: A placa-mãe não tem o tamanho correto para o gabinete")
+          record.errors.add(:base, "Incompatibilidade: A placa-mãe não tem o tamanho correto para o gabinete")
         end
 
       when "RAM"

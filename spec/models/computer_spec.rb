@@ -35,14 +35,25 @@ RSpec.describe Computer, type: :model do
       expect(computer.errors[:name]).to include("can't be blank")
     end
 
-    it 'processador incompatível com a placa mae ' do
+    it 'processador incompatível com socket da placa mae ' do
       component_mtb.update!(socket: "AMD4")
       component_cpu.update!(socket: "AMD5")
       expect(computer.reload).not_to be_valid
       expect(computer.errors[:base]).to include("Incompatibilidade: A CPU não é compatível com a placa-mãe.")
     end
 
+     it 'processador incompatível com a velocidade de transmissão da memória ram ' do
+      component_ram.update!(ram_speed: 4000)
+      component_cpu.update!(ram_speed: 3500)
+      expect(computer.reload).not_to be_valid
+      expect(computer.errors[:base]).to include("Velocidade incompatível com a memória  ram ")
+    end
 
+    it 'placa mãe com tamanho errado para o gabinete' do
+      component_mtb.update!(form_factor: "Micro-ATX")
+      expect(computer.reload).not_to be_valid
+      expect(computer.errors[:base]).to include("Incompatibilidade: O gabinete não é compatível com a placa-mãe.")
+    end
 
 
   end
