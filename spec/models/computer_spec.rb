@@ -56,5 +56,32 @@ RSpec.describe Computer, type: :model do
     end
 
 
+    it 'placa mãe incompatível com a arquitetura do processador' do
+      component_cpu.update!(architecture: "Zen4")
+      component_mtb.update!(architecture: "Zen2")
+      expect(computer.reload).not_to be_valid
+      expect(computer.errors[:base]).to include("Incompatibilidade: A placa-mãe não é compatível com Processador.")
+    end
+
+    it 'placa mãe com tipo de ram incompatível' do
+      component_ram.update!(ram_type: "DDR5")
+      component_mtb.update!(ram_type: "DDR4")
+      expect(computer.reload).not_to be_valid
+      expect(computer.errors[:base]).to include("Incompatibilidade: A placa-mãe não é compatível com a memória ram")
+    end
+
+    it 'tipo de ram incompatível com a placa mãe' do
+      component_mtb.update!(ram_type: "DDR5")
+      component_ram.update!(ram_type: "DDR4")
+      expect(computer.reload).not_to be_valid
+      expect(computer.errors[:base]).to include("Incompatibilidade: O tipo de RAM não é compatível com a placa-mãe.")
+    end
+
+    it 'velocidade da ram incompatível (ram mais rápida que ela mesma comparada)' do
+      component_ram.update!(ram_speed: 5000)
+      expect(computer.reload).not_to be_valid
+      expect(computer.errors[:base]).to include("Velocidade incompatível com a memória  ram ")
+    end
   end
 end
+     
