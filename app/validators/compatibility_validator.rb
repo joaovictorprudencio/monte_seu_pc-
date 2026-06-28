@@ -42,7 +42,7 @@ class CompatibilityValidator < ActiveModel::EachValidator
 
 
         if ram && ram.ram_speed > component.ram_speed
-          record.errors.add(:base, "Velocidade incompatível com a memória  ram  ")
+          record.errors.add(:base, "Velocidade incompatível com a memória  ram ")
         end
 
       when "CASE"

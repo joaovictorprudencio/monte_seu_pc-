@@ -62,3 +62,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "erb-formatter", "~> 0.7.3"
