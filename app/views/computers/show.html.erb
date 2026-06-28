@@ -26,5 +26,62 @@
       </div>
     </div>
 
+    <h1>componente </h1>
+<div id="smartwizard">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" href="#step-1">
+                Passo 1
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#step-2">
+                Passo 2
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#step-3">
+                Passo 3
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="step-1" class="tab-pane" role="tabpanel">
+            <h3>Informações Pessoais</h3>
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input type="text" class="form-control" id="cpf" required>
+            </div>
+            <button class="btn btn-primary next-btn">Próximo</button>
+        </div>
+        <div id="step-2" class="tab-pane" role="tabpanel">
+            <h3>Endereço</h3>
+            <div class="form-group">
+                <label for="cep">CEP:</label>
+                <input type="text" class="form-control" id="cep" required>
+            </div>
+            <div class="form-group">
+                <label for="rua">Rua:</label>
+                <input type="text" class="form-control" id="rua" required>
+            </div>
+            <button class="btn btn-secondary prev-btn">Anterior</button>
+            <button class="btn btn-primary next-btn">Próximo</button>
+        </div>
+        <div id="step-3" class="tab-pane" role="tabpanel">
+            <h3>Confirmação</h3>
+            <p>Revise suas informações antes de finalizar.</p>
+            <button class="btn btn-secondary prev-btn">Anterior</button>
+            <button class="btn btn-success">Finalizar</button>
+        </div>
+    </div>
+</div>
+
+
+
   </div>
 </div>
