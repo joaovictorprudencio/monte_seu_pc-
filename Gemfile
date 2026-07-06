@@ -46,16 +46,16 @@ gem "image_processing", "~> 1.2"
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "bundler-audit", require: false
-  gem 'dotenv-rails', groups: [:development, :test]
+  gem "dotenv-rails", groups: [ :development, :test ]
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
-  gem 'rspec-rails', '~> 8.0.0'
-  gem 'factory_bot_rails'
+  gem "rspec-rails", "~> 8.0.0"
+  gem "factory_bot_rails"
+  gem "view_component"
 end
 
 group :development do
   gem "web-console"
-  gem 'factory_bot_rails'
 end
 
 group :test do
