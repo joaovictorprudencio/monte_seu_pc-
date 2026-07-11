@@ -1,11 +1,84 @@
 class ComponentsController < ApplicationController
   before_action :set_component, only: %i[ show edit update destroy ]
 
-
   def index
-    @components = Component.all
+    @components = Component.by_category(params[:category])
+    .by_brand(params[:brand])
+    .by_price_range(params[:min_price], params[:max_price])
+
+    @components = case params[:order_by]
+    when "expensive_first"
+       @components.expensive_first
+    when "by_name"
+      @components.by_name
+    else
+      @components.cheaper_first
+    end
+     @components = @components.page(params[:page]).per(8)
   end
 
+  def cpus
+    @components = Component.by_category("CPU")
+       .by_brand(params[:brand])
+       .by_price_range(params[:min_price], params[:max_price])
+       .cheaper_first
+       .page(params[:page])
+       .per(8)
+  end
+
+   def gpus
+    @components = Component.by_category("GPU")
+       .by_brand(params[:brand])
+       .by_price_range(params[:min_price], params[:max_price])
+       .cheaper_first
+       .page(params[:page])
+       .per(8)
+   end
+
+   def rams
+    @components = Component.by_category("RAM")
+       .by_brand(params[:brand])
+       .by_price_range(params[:min_price], params[:max_price])
+       .cheaper_first
+       .page(params[:page])
+       .per(8)
+   end
+
+   def motherboards
+    @components = Component.by_category("MOTHERBOARD")
+       .by_brand(params[:brand])
+       .by_price_range(params[:min_price], params[:max_price])
+       .cheaper_first
+       .page(params[:page])
+       .per(8)
+   end
+
+   def cases
+    @components = Component.by_category("CASE")
+       .by_brand(params[:brand])
+       .by_price_range(params[:min_price], params[:max_price])
+       .cheaper_first
+       .page(params[:page])
+       .per(8)
+   end
+
+   def sources
+    @components = Component.by_category("SOURCE")
+       .by_brand(params[:brand])
+       .by_price_range(params[:min_price], params[:max_price])
+       .cheaper_first
+       .page(params[:page])
+       .per(8)
+   end
+
+  def storages
+    @components = Component.by_category("STORAGE")
+       .by_brand(params[:brand])
+       .by_price_range(params[:min_price], params[:max_price])
+       .cheaper_first
+       .page(params[:page])
+       .per(8)
+  end
 
   def show
   end
