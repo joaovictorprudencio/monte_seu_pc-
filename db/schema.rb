@@ -51,7 +51,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_07_185218) do
     t.integer "max_gpu_length"
     t.string "name"
     t.decimal "price", precision: 10, scale: 2
-    t.string "ram_speed"
+    t.integer "ram_speed"
     t.string "ram_type"
     t.integer "slots"
     t.string "socket"
