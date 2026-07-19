@@ -16,9 +16,4 @@ class Component < ApplicationRecord
   scope :cheapper_firts, -> { order(price: :asc) }
   scope :expansive_firts, -> { order(price: :desc) }
   scope :by_name, -> { order(name: :asc) }
-
-
-
-
-
 end
