@@ -4,14 +4,11 @@ class Computer < ApplicationRecord
   validates :components, compatibility: true
   validates :total_price, presence: true
   validates :name, presence: true
-
-  def total_price=(value)
-    if value.is_a?(String) && value.include?(",")
-      clean_value = value.gsub(/[R$\s.]/, "").gsub(",", ".")
-      super(clean_value)
-    else
-      super(value)
-    end
+  normalizes :total_price, with: ->(value) do
+    value.to_s
+         .gsub(/[R$\s]/, "")
+         .gsub(".", "")
+         .gsub(",", ".")
   end
 
   def create_mounting(components_list)
@@ -40,7 +37,7 @@ class Computer < ApplicationRecord
       name: self.name,
       description: description,
       type_of_use: type_of_use,
-      total_price: total_price,
+      total_price: total_price
     }
 
     case component.category
