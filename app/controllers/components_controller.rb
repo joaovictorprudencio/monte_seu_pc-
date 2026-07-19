@@ -17,6 +17,21 @@ class ComponentsController < ApplicationController
      @components = @components.page(params[:page]).per(8)
   end
 
+  def select_category
+    @category = params[:category] 
+    @components = Component.by_category(@category)
+                            .by_brand(params[:brand])
+                            .by_price_range(params[:min_price], params[:max_price])
+                            .page(params[:page])
+                            .per(6)
+
+    @selected_component = Component.find(params[:selected_id]) if params[:selected_id].present?
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+  end
+
   def cpus
     @components = Component.by_category("CPU")
        .by_brand(params[:brand])
