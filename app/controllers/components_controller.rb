@@ -18,7 +18,7 @@ class ComponentsController < ApplicationController
   end
 
   def select_category
-    @category = params[:category] 
+    @category = params[:category]
     @components = Component.by_category(@category)
                             .by_brand(params[:brand])
                             .by_price_range(params[:min_price], params[:max_price])
@@ -32,68 +32,6 @@ class ComponentsController < ApplicationController
     end
   end
 
-  def cpus
-    @components = Component.by_category("CPU")
-       .by_brand(params[:brand])
-       .by_price_range(params[:min_price], params[:max_price])
-       .cheaper_first
-       .page(params[:page])
-       .per(8)
-  end
-
-   def gpus
-    @components = Component.by_category("GPU")
-       .by_brand(params[:brand])
-       .by_price_range(params[:min_price], params[:max_price])
-       .cheaper_first
-       .page(params[:page])
-       .per(8)
-   end
-
-   def rams
-    @components = Component.by_category("RAM")
-       .by_brand(params[:brand])
-       .by_price_range(params[:min_price], params[:max_price])
-       .cheaper_first
-       .page(params[:page])
-       .per(8)
-   end
-
-   def motherboards
-    @components = Component.by_category("MOTHERBOARD")
-       .by_brand(params[:brand])
-       .by_price_range(params[:min_price], params[:max_price])
-       .cheaper_first
-       .page(params[:page])
-       .per(8)
-   end
-
-   def cases
-    @components = Component.by_category("CASE")
-       .by_brand(params[:brand])
-       .by_price_range(params[:min_price], params[:max_price])
-       .cheaper_first
-       .page(params[:page])
-       .per(8)
-   end
-
-   def sources
-    @components = Component.by_category("SOURCE")
-       .by_brand(params[:brand])
-       .by_price_range(params[:min_price], params[:max_price])
-       .cheaper_first
-       .page(params[:page])
-       .per(8)
-   end
-
-  def storages
-    @components = Component.by_category("STORAGE")
-       .by_brand(params[:brand])
-       .by_price_range(params[:min_price], params[:max_price])
-       .cheaper_first
-       .page(params[:page])
-       .per(8)
-  end
 
   def show
   end
