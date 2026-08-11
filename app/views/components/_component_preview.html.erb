@@ -1,5 +1,6 @@
-<% if selected_component.present? %>
-  <div class="card sticky-top" style="top: 20px;">
+<div class="card sticky-top" style="top: 20px;">
+  <% if selected_component.present? %>
+
     <div class="card-header bg-light">
       <h5 class="mb-0">Detalhes da Peça</h5>
     </div>
@@ -38,16 +39,17 @@
         <% end %>
       </div>
 
-      <button class="btn btn-success w-100 btn-lg" data-action="click->mounting-form#nextStep">
+      <button class="btn btn-success w-100 btn-lg" data-action="input->search-form#debounceSearch">
         <i class="fas fa-arrow-right"></i> Avançar
       </button>
     </div>
-  </div>
-<% else %>
-  <div class="card sticky-top" style="top: 20px;">
+
+  <% else %>
+
     <div class="card-body text-center" style="padding: 40px 20px;">
       <i class="fas fa-cube" style="font-size: 3rem; color: #ccc; margin-bottom: 20px;"></i>
       <p class="text-muted">Selecione uma peça para ver os detalhes</p>
     </div>
-  </div>
-<% end %>
+
+  <% end %>
+</div>

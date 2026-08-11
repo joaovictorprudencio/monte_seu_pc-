@@ -1,27 +1,45 @@
 <div class="container-fluid py-4">
-
   <div class="mb-4">
     <%= render "stepper", current_step: "components" %>
   </div>
 
-  <div class="row g-4">
-    <div class="col-lg-8">
-      <div class="mb-4 mb-4" >
+  <style>
+    .component-select-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .component-select-layout .component-list-col {
+      flex: 1 1 500px;
+      min-width: 420px;
+    }
+
+    .component-select-layout .component-preview-col {
+      flex: 0 1 380px;
+      min-width: 300px;
+    }
+  </style>
+
+  <div class="component-select-layout">
+    <div class="component-list-col">
+      <div class="mb-4 mb-4">
         <div class="row g-2 mb-4 ">
           <div class="col-md-8 mb-4  ">
             <div class="d-flex w-5 gap-2 align-items-center m">
-              <%= form_with url: select_category_path, method: :get, local: true, 
+              <%= form_with url: select_category_path, method: :get, local: true,
                   class: "d-flex gap-3 align-items-center",
                   data: { controller: "search-form" } do |f| %>
-                
+
                 <%= f.hidden_field :category, value: @category %>
                 <%= f.hidden_field :selected_id, id: "selected_component_id" %>
-                
-                <%= f.text_field :search, 
+
+                <%= f.text_field :search,
                     placeholder: "Pesquisar #{@category}...",
                     class: "form-control",
                     data: { action: "input->search-form#debounceSearch" } %>
-                
+
                 <button class="btn btn-outline-secondary" type="submit">
                   <i class="fas fa-search">Pesquisar </i>
                 </button>
@@ -43,7 +61,6 @@
         </div>
       </div>
 
-
       <turbo-frame id="components-list" class="mb-4">
         <div class="row g-3">
           <% if @components.any? %>
@@ -60,32 +77,28 @@
             </div>
           <% end %>
         </div>
-      
-
-      <% if @components.total_pages > 1 %>
-        <nav>
-          <ul class="pagination justify-content-center mt-5">
-            <% (1..@components.total_pages).each do |page| %>
-              <li class="page-item <%= 'active' if page == @components.current_page %>">
-                <%= link_to page, 
-                    select_category_path(category: @category, page: page),
-                    class: "page-link",
-                    data: { turbo_frame: "components-list" } %>
-              </li>
-            <% end %>
-          </ul>
-        </nav>
-      <% end %>
-    </div>
-  </turbo-frame>
-
-
-    <div class="col-lg-4">
-      <turbo-frame id="component-preview">
-         <%= render "component_preview", selected_component: @selected_component, category: @category %>
+        <% if @components.total_pages > 1 %>
+          <nav>
+            <ul class="pagination justify-content-center mt-5">
+              <% (1..@components.total_pages).each do |page| %>
+                <li class="page-item <%= 'active' if page == @components.current_page %>">
+                  <%= link_to page,
+                      select_category_path(category: @category, page: page),
+                      class: "page-link",
+                      data: { turbo_frame: "components-list" } %>
+                </li>
+              <% end %>
+            </ul>
+          </nav>
+        <% end %>
       </turbo-frame>
     </div>
 
+    <div class="component-preview-col">
+      <turbo-frame id="component-preview">
+        <%= render "component_preview", selected_component: @selected_component, category: @category %>
+      </turbo-frame>
+    </div>
   </div>
 </div>
 
@@ -99,7 +112,7 @@
       <div class="modal-body">
         <%= form_with url: select_category_path, method: :get, local: true do |f| %>
           <%= f.hidden_field :category, value: @category %>
-          
+
           <div class="mb-3">
             <label class="form-label">Marca</label>
             <%= f.text_field :brand, class: "form-control", placeholder: "Ex: Intel, AMD" %>
@@ -116,7 +129,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
-          <%= link_to "Limpar filtros", select_category_path(category: @category),  class: "btn btn-secondary w-100 mt-2"%>
+          <%= link_to "Limpar filtros", select_category_path(category: @category), class: "btn btn-secondary w-100 mt-2" %>
         <% end %>
       </div>
     </div>

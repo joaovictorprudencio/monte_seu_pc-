@@ -1,13 +1,13 @@
-<turbo-frame id="component-<%= component.id %>" 
+<turbo-frame id="component-<%= component.id %>"
              data-id="<%= component.id %>"
              data-category="<%= category %>">
-  
+
   <div class="card h-100 cursor-pointer"
+       style="width: 100%; max-width: 540px; margin-inline: auto;"
        data-controller="select-component"
        data-component-id="<%= component.id %>"
        data-action="click->select-component#select">
-    
-    <div class="d-flex align-items-center justify-content-center overflow-hidden bg-body-tertiary" style="height: 150px;">
+    <div class="d-flex align-items-center justify-content-center overflow-hidden bg-body-tertiary" style="height: 400px; width: 100%;">
       <img src="<%= component.display_image %>"
              alt="<%= component.name %>"
              class="img-fluid object-fit-contain">
@@ -17,7 +17,6 @@
       <h6 class="card-title">
         <%= component.name %>
       </h6>
-      
       <p class="text-muted small mb-2">
         <%= component.brand %>
       </p>
@@ -35,4 +34,3 @@
     </div>
   </div>
 </turbo-frame>
- 
