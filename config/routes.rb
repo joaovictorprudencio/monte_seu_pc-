@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :components
   resources :computers
 
+  resource :computer_assembly, only: [:create]
+
    namespace :api do
     resources :computers
   end

@@ -1,178 +1,37 @@
-<div class="container-fluid py-4">
-  <div class="mb-4">
-    <%= render "components/stepper", current_step: "motherboard" %>
-  </div>
-
-  <div class="row g-4">
-    <div class="col-lg-8">
-      <div class="mb-4">
-        <div class="row g-2">
-          <div class="col-md-8">
-            <div class="input-group">
-              <%= form_with url: select_category_path, method: :get, local: true, 
-                  data: { controller: "search-form" } do |f| %>
-                
-                <%= f.hidden_field :category, value: @category %>
-                <%= f.hidden_field :selected_id, id: "selected_component_id" %>
-                
-                <%= f.text_field :search, 
-                    placeholder: "Pesquisar #{@category}...",
-                    class: "form-control",
-                    data: { action: "input->search-form#debounceSearch" } %>
-                
-                <button class="btn btn-outline-secondary" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-              <% end %>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="btn-group w-100" role="group">
-              <button type="button" class="btn btn-outline-primary">
-                <i class="fas fa-star"></i> Mais procurados
-              </button>
-              <button type="button" class="btn btn-outline-primary"
-                      data-bs-toggle="modal" data-bs-target="#filtersModal">
-                <i class="fas fa-sliders-h"></i> Filtros
-              </button>
-            </div>
-          </div>
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h4 class="mb-0">Nova montagem</h4>
         </div>
-      </div>
-
-
-      <turbo-frame id="components-list" class="mb-4">
-        <div class="row g-3">
-          <% if @components.any? %>
-            <% @components.each do |component| %>
-              <div class="col-md-6">
-                <%= render "component_card", component: component, category: @category %>
-              </div>
-            <% end %>
-          <% else %>
-            <div class="col-12">
-              <div class="alert alert-info">
-                Nenhum componente encontrado para esta categoria.
-              </div>
+        <div class="card-body">
+          <% if @computer.errors.any? %>
+            <div class="alert alert-danger" role="alert">
+              <h5 class="alert-heading"><%= pluralize(@computer.errors.count, "erro") %> impediram o salvamento:</h5>
+              <ul class="mb-0">
+                <% @computer.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
             </div>
           <% end %>
+
+          <%= form_with model: @computer, data: { turbo: false } do |form| %>
+            <div class="mb-3">
+              <%= form.label :name, "Nome", class: "form-label" %>
+              <%= form.text_field :name, class: "form-control", placeholder: "Ex: PC gamer" %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :description, "Descrição", class: "form-label" %>
+              <%= form.text_area :description, class: "form-control", rows: 3,
+                                 placeholder: "Descreva sua montagem" %>
+            </div>
+
+            <%= form.submit "Salvar", class: "btn btn-primary" %>
+          <% end %>
         </div>
-      </turbo-frame>
-
-      <% if @components.total_pages > 1 %>
-        <nav>
-          <ul class="pagination justify-content-center">
-            <% (1..@components.total_pages).each do |page| %>
-              <li class="page-item <%= 'active' if page == @components.current_page %>">
-                <%= link_to page, 
-                    select_category_path(category: @category, page: page),
-                    class: "page-link",
-                    data: { turbo_frame: "components-list" } %>
-              </li>
-            <% end %>
-          </ul>
-        </nav>
-      <% end %>
-    </div>
-
-
-    <div class="col-lg-4">
-      <turbo-frame id="component-preview">
-        <div class="card sticky-top" style="top: 20px;">
-          <div class="card-header bg-light">
-            <h5 class="mb-0">Detalhes da Peça</h5>
-          </div>
-
-          <div class="card-body text-center">
-            <% if @selected_component.present? %>
-              <div class="mb-3" style="height: 200px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 8px;">
-                <% if @selected_component.image_url.present? %>
-                  <img src="<%= @selected_component.image_url %>" 
-                       alt="<%= @selected_component.name %>" 
-                       class="img-fluid" 
-                       style="max-height: 100%; object-fit: contain;">
-                <% else %>
-                  <i class="fas fa-image" style="font-size: 3rem; color: #999;"></i>
-                <% end %>
-              </div>
-
-              <h5 class="card-title"><%= @selected_component.name %></h5>
-
-              <p class="text-muted mb-3">
-                <strong><%= @selected_component.brand %></strong>
-              </p>
-
-              <div class="mb-3">
-                <span class="badge bg-success" style="font-size: 1.2rem; padding: 10px 15px;">
-                  R$ <%= number_to_currency(@selected_component.price, unit: "", delimiter: ".", separator: ",") %>
-                </span>
-              </div>
-
-              <div class="specs mb-4 text-start">
-                <h6 class="text-secondary mb-2">Especificações</h6>
-                
-                <% if @category == "CPU" %>
-                  <small class="d-block"><strong>Cores:</strong> <%= @selected_component.cores %></small>
-                  <small class="d-block"><strong>Frequência:</strong> <%= @selected_component.frequency %>GHz</small>
-                  <small class="d-block"><strong>Socket:</strong> <%= @selected_component.socket %></small>
-                <% elsif @category == "GPU" %>
-                  <small class="d-block"><strong>VRAM:</strong> <%= @selected_component.vram %>GB</small>
-                  <small class="d-block"><strong>Arquitetura:</strong> <%= @selected_component.architecture %></small>
-                  <small class="d-block"><strong>Potência:</strong> <%= @selected_component.wattage %>W</small>
-                <% elsif @category == "RAM" %>
-                  <small class="d-block"><strong>Capacidade:</strong> <%= @selected_component.capacity %>GB</small>
-                  <small class="d-block"><strong>Tipo:</strong> <%= @selected_component.ram_type %></small>
-                  <small class="d-block"><strong>Velocidade:</strong> <%= @selected_component.speed %>MHz</small>
-                <% end %>
-              </div>
-
-              <button class="btn btn-success w-100 btn-lg" 
-                      data-action="click->mounting-form#nextStep">
-                <i class="fas fa-arrow-right"></i> Avançar
-              </button>
-
-            <% else %>
-              <div style="padding: 40px 20px;">
-                <i class="fas fa-cube" style="font-size: 3rem; color: #ccc; margin-bottom: 20px;"></i>
-                <p class="text-muted">Selecione uma peça para ver os detalhes</p>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </turbo-frame>
-    </div>
-
-  </div>
-</div>
-
-<div class="modal fade" id="filtersModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Filtrar <%= @category %></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <%= form_with url: select_category_path, method: :get, local: true do |f| %>
-          <%= f.hidden_field :category, value: @category %>
-          
-          <div class="mb-3">
-            <label class="form-label">Marca</label>
-            <%= f.text_field :brand, class: "form-control", placeholder: "Ex: Intel, AMD" %>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Preço Mínimo</label>
-            <%= f.number_field :min_price, class: "form-control", placeholder: "R$ 0" %>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Preço Máximo</label>
-            <%= f.number_field :max_price, class: "form-control", placeholder: "R$ 9999" %>
-          </div>
-
-          <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
-        <% end %>
       </div>
     </div>
   </div>
