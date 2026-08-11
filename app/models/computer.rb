@@ -1,9 +1,11 @@
 class Computer < ApplicationRecord
   has_many :computer_parts
   has_many :components, through: :computer_parts
+  belongs_to :user
   validates :components, compatibility: true
   validates :total_price, presence: true
   validates :name, presence: true
+  enum :status, { draft: 0, building: 1, completed: 2, cancelled: 3 }
   normalizes :total_price, with: ->(value) do
     value.to_s
          .gsub(/[R$\s]/, "")
@@ -11,26 +13,19 @@ class Computer < ApplicationRecord
          .gsub(",", ".")
   end
 
-  def create_mounting(components_list)
-    components_list.each do |component|
-      computer_parts.create(component_id: component.id, computer_id: id)
-      calculate_total_price(component.price)
-    end
-  end
 
-  def calculate_total_price(price)
-    update(total_price + price)
-  end
 
   def change_part(componente, new_componente)
     computer_part = computer_parts.find_by(component_id: componente.id)
 
-    new_price = self.price - component.price + new_componente.price
+    new_price = price - component.price + new_componente.price
 
     update(total_price: new_price)
 
     computer_part.update(component_id: new_componente.id)
   end
+
+
 
   def save_hash(component)
     data = {
