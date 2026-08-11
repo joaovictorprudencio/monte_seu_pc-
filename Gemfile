@@ -65,3 +65,5 @@ group :test do
 end
 
 gem "erb-formatter", "~> 0.7.3"
+
+gem "bcrypt", "~> 3.1"
