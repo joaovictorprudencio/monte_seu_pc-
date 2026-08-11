@@ -1,7 +1,17 @@
 # db/seeds.rb
 
-Component.destroy_all
-Computer.destroy_all
+
+
+puts "👤 Criando Users..."
+
+users = [
+  { name: "João", email: "joao@example.com", password: "password123" },
+  { name: "Maria", email: "maria@example.com", password: "password123" },
+  { name: "Pedro", email: "pedro@example.com", password: "password123" },
+]
+
+created_users = users.map { |u| User.create!(u) }
+puts "✅ #{created_users.length} Users criados"
 
 puts "🔧 Criando Components..."
 
@@ -117,10 +127,9 @@ cases = [
 cases.each { |case_item| create_component(case_item) }
 
 computers = [
-  { name: "PC Gamer Budget", description: "Build entrada para gaming", type_of_use: "Gaming", total_price: 0 },
-  { name: "PC Gamer Mid-Range", description: "Build intermediaria com RTX 3070", type_of_use: "Gaming", total_price: 0 },
-  { name: "PC Workstation", description: "Para design e rendering", type_of_use: "Trabalho", total_price: 0 },
+  { name: "PC Gamer Budget", description: "Build entrada para gaming", type_of_use: "Gaming", total_price: 0, user: created_users[0] },
+  { name: "PC Gamer Mid-Range", description: "Build intermediaria com RTX 3070", type_of_use: "Gaming", total_price: 0, user: created_users[1] },
+  { name: "PC Workstation", description: "Para design e rendering", type_of_use: "Trabalho", total_price: 0, user: created_users[2] },
 ]
 
 computers.each { |computer| Computer.create!(computer) }
-
