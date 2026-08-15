@@ -38,16 +38,20 @@
             <small class="d-block"><strong>Velocidade:</strong> <%= @selected_component.speed %>MHz</small>
           <% end %>
         </div>
+        <%= button_to create_assemble_computer_path(@computer, component_id: @selected_component.id  ),
+            method: :patch,
+            class: "btn btn-success w-100 btn-lg",
+            form_class: "w-100" do %>
+            <i class="fas fa-arrow-right">Avançar</i>
+        <% end %>
 
-        <button class="btn btn-success w-100 btn-lg" data-action="click->mounting-form#nextStep">
-          <i class="fas fa-arrow-right"></i> Avançar
-        </button>
       <% else %>
         <div style="padding: 40px 20px;">
           <i class="fas fa-cube" style="font-size: 3rem; color: #ccc; margin-bottom: 20px;"></i>
           <p class="text-muted">Selecione uma peça para ver os detalhes</p>
         </div>
       <% end %>
+
     </div>
   </div>
 <% end %>
