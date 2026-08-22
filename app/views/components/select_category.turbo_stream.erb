@@ -38,11 +38,12 @@
             <small class="d-block"><strong>Velocidade:</strong> <%= @selected_component.speed %>MHz</small>
           <% end %>
         </div>
-        <%= button_to create_assemble_computer_path(@computer, component_id: @selected_component.id  ),
+        <%= button_to create_assemble_computer_path(@computer, component_id: @selected_component.id),
             method: :patch,
             class: "btn btn-success w-100 btn-lg",
-            form_class: "w-100" do %>
-            <i class="fas fa-arrow-right">Avançar</i>
+            form_class: "w-100",
+            data: { turbo: false } do %>
+            <i class="fas fa-arrow-right"></i> Avançar
         <% end %>
 
       <% else %>

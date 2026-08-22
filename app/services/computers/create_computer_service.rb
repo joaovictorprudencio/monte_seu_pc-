@@ -16,6 +16,7 @@ module Computers
     def create_assemble
       computer.computer_parts.create!(component_id: component.id, computer_id: computer.id)
       computer.total_price = component.price
+      computer.building!
     end
   end
 end

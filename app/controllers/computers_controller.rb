@@ -27,20 +27,31 @@ class ComputersController < ApplicationController
     ))
 
     if @computer.save
-      redirect_to select_category_path(category: "CPU")
+      redirect_to select_category_path(category: "CPU", computer_id: @computer.id)
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-
+  CATEGORY_ORDER = %W[CPU MOTHERBOARD RAM GPU STORAGE SOURCE CASE REVIEW]
   def create_assemble
-        computer = Computers::CreateComputerService.new(
-      computer: Computer.find(params[:computer_id]),
-      component: Component.find(params[:component_id]),
+    @computer = Computer.find(params[:id])
+    @component = Component.find(params[:component_id])
+
+    @couple = Computers::CreateComputerService.new(
+      computer: @computer,
+      component: @component,
     ).call
 
-    redirect_to computer
+    current_category = CATEGORY_ORDER.index(@component.category)
+    next_category = CATEGORY_ORDER[current_category + 1] || "REVIEW"
+
+    respond_to do |format|
+      format.html { redirect_to select_category_path(category: next_category, computer_id: @computer.id) }
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.action(:redirect, select_category_path(category: next_category, computer_id: @computer.id))
+      }
+    end
   end
 
 

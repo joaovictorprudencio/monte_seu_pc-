@@ -19,6 +19,7 @@ class ComponentsController < ApplicationController
 
   def select_category
     @category = params[:category]
+    @computer = Computer.find(params[:computer_id])
     @components = Component.by_category(@category)
                             .by_brand(params[:brand])
                             .by_price_range(params[:min_price], params[:max_price])

@@ -8,9 +8,7 @@
        data-component-id="<%= component.id %>"
        data-action="click->select-component#select">
     <div class="d-flex align-items-center justify-content-center overflow-hidden bg-body-tertiary" style="height: 400px; width: 100%;">
-      <img src="<%= component.display_image %>"
-             alt="<%= component.name %>"
-             class="img-fluid object-fit-contain">
+      <%= image_tag  component.image, alt: component.name, class:  "img-fluid object-fit-contain" %>
     </div>
 
     <div class="card-body">

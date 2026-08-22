@@ -1,6 +1,6 @@
 <div class="container-fluid py-4">
   <div class="mb-4">
-    <%= render "stepper", current_step: "components" %>
+    <%= render "stepper", current_step: params[:category] %>
   </div>
 
   <style>
@@ -21,6 +21,7 @@
       min-width: 300px;
     }
   </style>
+
 
   <div class="component-select-layout">
     <div class="component-list-col">
@@ -94,11 +95,12 @@
       </turbo-frame>
     </div>
 
-    <div class="component-preview-col">
+    <div class="col-lg-4  ">
       <turbo-frame id="component-preview">
-        <%= render "component_preview", selected_component: @selected_component, category: @category %>
+        <%= render template: "components/select_category", formats: [:turbo_stream] %>
       </turbo-frame>
     </div>
+
   </div>
 </div>
 
