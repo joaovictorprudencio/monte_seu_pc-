@@ -20,16 +20,37 @@ class ComputersController < ApplicationController
 
 
   def create
-    @computer = Computer.new(computer_params)
+    @computer = Computer.new(computer_params.merge(
+      status: :draft,
+      total_price: 0.0,
+      user: User.first
+    ))
+
+    if @computer.save
+      redirect_to select_category_path(category: "CPU", computer_id: @computer.id)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  CATEGORY_ORDER = %W[CPU MOTHERBOARD RAM GPU STORAGE SOURCE CASE REVIEW]
+  def create_assemble
+    @computer = Computer.find(params[:id])
+    @component = Component.find(params[:component_id])
+
+    @couple = Computers::CreateComputerService.new(
+      computer: @computer,
+      component: @component,
+    ).call
+
+    current_category = CATEGORY_ORDER.index(@component.category)
+    next_category = CATEGORY_ORDER[current_category + 1] || "REVIEW"
 
     respond_to do |format|
-      if @computer.save
-        format.html { redirect_to @computer, notice: "Computer was successfully created." }
-        format.json { render :show, status: :created, location: @computer }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @computer.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to select_category_path(category: next_category, computer_id: @computer.id) }
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.action(:redirect, select_category_path(category: next_category, computer_id: @computer.id))
+      }
     end
   end
 
@@ -63,6 +84,6 @@ class ComputersController < ApplicationController
 
 
     def computer_params
-      params.expect(computer: [ :name, :description, :type_of_use, :total_price => 0.0 ])
+      params.expect(computer: [ :name, :description, :type_of_use,  :total_price => 0.0 ])
     end
 end

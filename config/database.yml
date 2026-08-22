@@ -10,7 +10,7 @@ default: &default
   timeout: 8000
   username: <%=ENV["DB_USER"] %>
   password: <%=ENV["DB_PASSWORD"] %>
-  host: localhost
+  host: 127.0.0.1
   port: 5432
 
 

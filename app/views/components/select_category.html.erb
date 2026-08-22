@@ -1,0 +1,139 @@
+<div class="container-fluid py-4">
+  <div class="mb-4">
+    <%= render "stepper", current_step: params[:category] %>
+  </div>
+
+  <style>
+    .component-select-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .component-select-layout .component-list-col {
+      flex: 1 1 500px;
+      min-width: 420px;
+    }
+
+    .component-select-layout .component-preview-col {
+      flex: 0 1 380px;
+      min-width: 300px;
+    }
+  </style>
+
+
+  <div class="component-select-layout">
+    <div class="component-list-col">
+      <div class="mb-4 mb-4">
+        <div class="row g-2 mb-4 ">
+          <div class="col-md-8 mb-4  ">
+            <div class="d-flex w-5 gap-2 align-items-center m">
+              <%= form_with url: select_category_path, method: :get, local: true,
+                  class: "d-flex gap-3 align-items-center",
+                  data: { controller: "search-form" } do |f| %>
+
+                <%= f.hidden_field :category, value: @category %>
+                <%= f.hidden_field :selected_id, id: "selected_component_id" %>
+
+                <%= f.text_field :search,
+                    placeholder: "Pesquisar #{@category}...",
+                    class: "form-control",
+                    data: { action: "input->search-form#debounceSearch" } %>
+
+                <button class="btn btn-outline-secondary" type="submit">
+                  <i class="fas fa-search">Pesquisar </i>
+                </button>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="btn-group w-100" role="group">
+              <button type="button" class="btn btn-outline-primary">
+                <i class="fas fa-star"></i> Mais procurados
+              </button>
+              <button type="button" class="btn btn-outline-primary"
+                      data-bs-toggle="modal" data-bs-target="#filtersModal">
+                <i class="fas fa-sliders-h"></i> Filtros
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <turbo-frame id="components-list" class="mb-4">
+        <div class="row g-3">
+          <% if @components.any? %>
+            <% @components.each do |component| %>
+              <div class="col-md-6">
+                <%= render "component_card", component: component, category: @category %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="col-12">
+              <div class="alert alert-info">
+                Nenhum componente encontrado para esta categoria.
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <% if @components.total_pages > 1 %>
+          <nav>
+            <ul class="pagination justify-content-center mt-5">
+              <% (1..@components.total_pages).each do |page| %>
+                <li class="page-item <%= 'active' if page == @components.current_page %>">
+                  <%= link_to page,
+                      select_category_path(category: @category, page: page),
+                      class: "page-link",
+                      data: { turbo_frame: "components-list" } %>
+                </li>
+              <% end %>
+            </ul>
+          </nav>
+        <% end %>
+      </turbo-frame>
+    </div>
+
+    <div class="col-lg-4  ">
+      <turbo-frame id="component-preview">
+        <%= render template: "components/select_category", formats: [:turbo_stream] %>
+      </turbo-frame>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="filtersModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Filtrar <%= @category %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: select_category_path, method: :get, local: true do |f| %>
+          <%= f.hidden_field :category, value: @category %>
+
+          <div class="mb-3">
+            <label class="form-label">Marca</label>
+            <%= f.text_field :brand, class: "form-control", placeholder: "Ex: Intel, AMD" %>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Preço Mínimo</label>
+            <%= f.number_field :min_price, class: "form-control", placeholder: "R$ 0" %>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Preço Máximo</label>
+            <%= f.number_field :max_price, class: "form-control", placeholder: "R$ 9999" %>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
+          <%= link_to "Limpar filtros", select_category_path(category: @category), class: "btn btn-secondary w-100 mt-2" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

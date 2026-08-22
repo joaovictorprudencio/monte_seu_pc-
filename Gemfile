@@ -2,8 +2,8 @@ source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.1.2"
-# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft"
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem "sprockets-rails"
 # Use SCSS for stylesheets
 gem "dartsass-rails"
 
@@ -52,10 +52,12 @@ group :development, :test do
   gem "rspec-rails", "~> 8.0.0"
   gem "factory_bot_rails"
   gem "view_component"
+  gem 'kaminari'
 end
 
 group :development do
   gem "web-console"
+  gem 'xray-rails'
 end
 
 group :test do
@@ -64,3 +66,5 @@ group :test do
 end
 
 gem "erb-formatter", "~> 0.7.3"
+
+gem "bcrypt", "~> 3.1"

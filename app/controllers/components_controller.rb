@@ -1,9 +1,36 @@
 class ComponentsController < ApplicationController
   before_action :set_component, only: %i[ show edit update destroy ]
 
-
   def index
-    @components = Component.all
+    @components = Component.by_category(params[:category])
+    .by_brand(params[:brand])
+    .by_price_range(params[:min_price], params[:max_price])
+
+    @components = case params[:order_by]
+    when "expensive_first"
+       @components.expensive_first
+    when "by_name"
+      @components.by_name
+    else
+      @components.cheaper_first
+    end
+     @components = @components.page(params[:page]).per(8)
+  end
+
+  def select_category
+    @category = params[:category]
+    @computer = Computer.find(params[:computer_id])
+    @components = Component.by_category(@category)
+                            .by_brand(params[:brand])
+                            .by_price_range(params[:min_price], params[:max_price])
+                            .page(params[:page])
+                            .per(6)
+
+    @selected_component = Component.find(params[:selected_id]) if params[:selected_id].present?
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
 
