@@ -84,7 +84,7 @@
               <% (1..@components.total_pages).each do |page| %>
                 <li class="page-item <%= 'active' if page == @components.current_page %>">
                   <%= link_to page,
-                      select_category_path(category: @category, page: page),
+                      select_category_path(category: @category, params: { computer_id: @computer.id }, page: page),
                       class: "page-link",
                       data: { turbo_frame: "components-list" } %>
                 </li>
