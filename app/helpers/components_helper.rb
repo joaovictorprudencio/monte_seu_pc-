@@ -6,8 +6,4 @@ module ComponentsHelper
       "#{value} GB"
     end
   end
-
-  def add_atr(component:)
-    cp =  Component.update(storage: 8)
-  end
 end
