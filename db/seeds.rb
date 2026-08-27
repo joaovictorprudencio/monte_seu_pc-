@@ -55,10 +55,10 @@ puts "✅ #{cpus.length} CPUs criadas"
 
 
 motherboards = [
-  { name: "ASUS ROG STRIX B760-F", brand: "ASUS", category: "Motherboard", price: 800.00, socket: "LGA1700", form_factor: "ATX" },
-  { name: "MSI MPG Z790 EDGE", brand: "MSI", category: "Motherboard", price: 1100.00, socket: "LGA1700", form_factor: "ATX" },
-  { name: "ASUS ROG STRIX X870-E", brand: "ASUS", category: "Motherboard", price: 900.00, socket: "AM5", form_factor: "ATX" },
-  { name: "MSI MPG B850-E EDGE", brand: "MSI", category: "Motherboard", price: 700.00, socket: "AM5", form_factor: "ATX" },
+  { name: "ASUS ROG STRIX B760-F", brand: "ASUS", category: "MOTHERBOARD", price: 800.00, socket: "LGA1700", form_factor: "ATX" },
+  { name: "MSI MPG Z790 EDGE", brand: "MSI", category: "MOTHERBOARD", price: 1100.00, socket: "LGA1700", form_factor: "ATX" },
+  { name: "ASUS ROG STRIX X870-E", brand: "ASUS", category: "MOTHERBOARD", price: 900.00, socket: "AM5", form_factor: "ATX", architecture: "Zen 4" },
+  { name: "MSI MPG B850-E EDGE", brand: "MSI", category: "MOTHERBOARD", price: 700.00, socket: "AM5", form_factor: "ATX" },
 ]
 
 motherboards.each { |mb| create_component(mb) }
@@ -97,31 +97,31 @@ gpus.each { |gpu| create_component(gpu) }
 
 
 storages = [
-  { name: "Kingston A2000 500GB NVMe", brand: "Kingston", category: "Storage", price: 250.00, form_factor: "M.2 NVMe" },
-  { name: "Samsung 970 EVO Plus 1TB NVMe", brand: "Samsung", category: "Storage", price: 450.00, form_factor: "M.2 NVMe" },
-  { name: "WD Black SN850X 2TB NVMe", brand: "Western Digital", category: "Storage", price: 900.00, form_factor: "M.2 NVMe" },
-  { name: "Seagate Barracuda 1TB HDD", brand: "Seagate", category: "Storage", price: 250.00, form_factor: "3.5\" HDD" },
-  { name: "WD Blue 2TB HDD", brand: "Western Digital", category: "Storage", price: 350.00, form_factor: "3.5\" HDD" },
+  { name: "Kingston A2000 500GB NVMe", brand: "Kingston", category: "STORAGE", price: 250.00, form_factor: "M.2 NVMe" },
+  { name: "Samsung 970 EVO Plus 1TB NVMe", brand: "Samsung", category: "STORAGE", price: 450.00, form_factor: "M.2 NVMe" },
+  { name: "WD Black SN850X 2TB NVMe", brand: "Western Digital", category: "STORAGE", price: 900.00, form_factor: "M.2 NVMe" },
+  { name: "Seagate Barracuda 1TB HDD", brand: "Seagate", category: "STORAGE", price: 250.00, form_factor: "3.5\" HDD" },
+  { name: "WD Blue 2TB HDD", brand: "Western Digital", category: "STORAGE", price: 350.00, form_factor: "3.5\" HDD" },
 ]
 
 storages.each { |storage| create_component(storage) }
 
 power_supplies = [
-  { name: "Corsair CV 550W", brand: "Corsair", category: "Power Supply", price: 300.00, wattage: 550 },
-  { name: "EVGA SuperNOVA 750W Gold", brand: "EVGA", category: "Power Supply", price: 500.00, wattage: 750 },
-  { name: "Seasonic Focus Plus 850W Gold", brand: "Seasonic", category: "Power Supply", price: 600.00, wattage: 850 },
-  { name: "Corsair HX1000 Platinum", brand: "Corsair", category: "Power Supply", price: 1200.00, wattage: 1000 },
+  { name: "Corsair CV 550W", brand: "Corsair", category: "POWER SUPPL", price: 300.00, wattage: 550 },
+  { name: "EVGA SuperNOVA 750W Gold", brand: "EVGA", category: "POWER SUPPLY", price: 500.00, wattage: 750 },
+  { name: "Seasonic Focus Plus 850W Gold", brand: "Seasonic", category: "POWER SUPPLY", price: 600.00, wattage: 850 },
+  { name: "Corsair HX1000 Platinum", brand: "Corsair", category: "POWER SUPPLY", price: 1200.00, wattage: 1000 },
 ]
 
 power_supplies.each { |psu| create_component(psu) }
 
 
 cases = [
-  { name: "Corsair 275R Airflow", brand: "Corsair", category: "Case", price: 400.00, form_factor: "ATX", max_gpu_length: 370 },
-  { name: "NZXT H510 Flow", brand: "NZXT", category: "Case", price: 450.00, form_factor: "ATX", max_gpu_length: 325 },
-  { name: "Lian Li LANCOOL 205", brand: "Lian Li", category: "Case", price: 250.00, form_factor: "mATX", max_gpu_length: 320 },
-  { name: "Phanteks Eclipse P500A", brand: "Phanteks", category: "Case", price: 550.00, form_factor: "ATX", max_gpu_length: 370 },
-  { name: "Fractal Design North", brand: "Fractal Design", category: "Case", price: 700.00, form_factor: "ATX", max_gpu_length: 340 },
+  { name: "Corsair 275R Airflow", brand: "Corsair", category: "CASE", price: 400.00, form_factor: "ATX", max_gpu_length: 370 },
+  { name: "NZXT H510 Flow", brand: "NZXT", category: "CASE", price: 450.00, form_factor: "ATX", max_gpu_length: 325 },
+  { name: "Lian Li LANCOOL 205", brand: "Lian Li", category: "CASE", price: 250.00, form_factor: "mATX", max_gpu_length: 320 },
+  { name: "Phanteks Eclipse P500A", brand: "Phanteks", category: "CASE", price: 550.00, form_factor: "ATX", max_gpu_length: 370 },
+  { name: "Fractal Design North", brand: "Fractal Design", category: "CASE", price: 700.00, form_factor: "ATX", max_gpu_length: 340 },
 ]
 
 cases.each { |case_item| create_component(case_item) }

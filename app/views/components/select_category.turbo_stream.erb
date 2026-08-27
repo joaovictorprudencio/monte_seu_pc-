@@ -26,16 +26,16 @@
           <h6 class="text-secondary mb-2">Especificações</h6>
           <% if @category == "CPU" %>
             <small class="d-block"><strong>Cores:</strong> <%= @selected_component.name %></small>
-            <small class="d-block"><strong>Frequência:</strong> <%= @selected_component.price %>GHz</small>
+            <small class="d-block"><strong>Frequência:</strong> <%= @selected_component.storage %>GHz</small>
             <small class="d-block"><strong>Socket:</strong> <%= @selected_component.ram_speed %>GHz</small>
           <% elsif @category == "GPU" %>
             <small class="d-block"><strong>VRAM:</strong> <%= @selected_component.architecture %>GB</small>
             <small class="d-block"><strong>Arquitetura:</strong> <%= @selected_component.architecture %></small>
             <small class="d-block"><strong>Potência:</strong> <%= @selected_component.wattage %>W</small>
           <% elsif @category == "RAM" %>
-            <small class="d-block"><strong>Capacidade:</strong> <%= @selected_component.capacity %>GB</small>
+            <small class="d-block"><strong>Amazenamento:</strong> <%= format_storage(@selected_component.storage) %></small>
             <small class="d-block"><strong>Tipo:</strong> <%= @selected_component.ram_type %></small>
-            <small class="d-block"><strong>Velocidade:</strong> <%= @selected_component.speed %>MHz</small>
+            <small class="d-block"><strong>Velocidade:</strong> <%= @selected_component.ram_speed %>MHz</small>
           <% end %>
         </div>
         <%= button_to create_assemble_computer_path(@computer, component_id: @selected_component.id),
