@@ -2,7 +2,6 @@ class Computer < ApplicationRecord
   has_many :computer_parts
   has_many :components, through: :computer_parts
   belongs_to :user
-  validates :components, compatibility: true
   validates :total_price, presence: true
   validates :name, presence: true
   enum :status, { draft: 0, building: 1, completed: 2, cancelled: 3 }
