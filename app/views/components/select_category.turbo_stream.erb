@@ -18,7 +18,7 @@
 
         <div class="mb-3">
           <span class="badge bg-success" style="font-size: 1.2rem; padding: 10px 15px;">
-            R$ <%= number_to_currency(@selected_component.price, unit: "", delimiter: ".", separator: ",") %>
+            <%= format_currency(@selected_component.price) %>
           </span>
         </div>
 

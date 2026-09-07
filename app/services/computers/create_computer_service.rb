@@ -15,8 +15,8 @@ module Computers
 
     def create_assemble
       computer.computer_parts.create!(component_id: component.id, computer_id: computer.id)
-      computer.total_price = component.price
-      computer.building!
+      computer.increment!(:total_price, component.price)
+      computer.building! if computer.draft?
     end
   end
 end

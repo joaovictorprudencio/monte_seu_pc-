@@ -1,6 +1,26 @@
 <div class="container-fluid py-4">
   <div class="mb-4">
     <%= render "stepper", current_step: params[:category] %>
+    <% categories = %w[CPU MOTHERBOARD RAM GPU STORAGE SOURCE CASE] %>
+    <% current_index = categories.index(@category) || 0 %>
+    <div class="d-flex justify-content-between mt-3">
+      <% if current_index > 0 %>
+        <%= link_to select_category_path(category: categories[current_index - 1], computer_id: @computer.id), class: "btn btn-outline-secondary" do %>
+          <i class="bi bi-arrow-left me-1"></i> Voltar
+        <% end %>
+      <% else %>
+        <div></div>
+      <% end %>
+      <% if current_index < categories.length - 1 %>
+        <%= link_to select_category_path(category: categories[current_index + 1], computer_id: @computer.id), class: "btn btn-primary" do %>
+          Avançar <i class="bi bi-arrow-right ms-1"></i>
+        <% end %>
+      <% else %>
+        <%= link_to review_computer_path(@computer), class: "btn btn-primary" do %>
+          Revisar <i class="bi bi-arrow-right ms-1"></i>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
   <style>

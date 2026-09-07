@@ -65,11 +65,11 @@ class ComputerPart < ApplicationRecord
     ram = find_existing("RAM")
 
     if motherboard && motherboard.ram_type != component.ram_type
-      errors.add(:base, "Incompatibilidade: O tipo de RAM não é compatível com a placa-mãe.")
+      errors.add(:base, "Incompatibilidade: O tipo ", component.ram_type, " RAM não é compatível com a placa-mãe.")
     end
 
-    if ram && ram.ram_speed && component.ram_speed && ram.ram_speed > component.ram_speed
-      errors.add(:base, "Velocidade incompatível com a memória RAM")
+    if ram &&  ram.ram_type != component.ram_type
+      errors.add(:base, "Incompatibilidade: O tipo ", component.ram_type," é incompatível com a memória RAM")
     end
   end
 
