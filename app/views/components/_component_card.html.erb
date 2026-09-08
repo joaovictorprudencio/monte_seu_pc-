@@ -21,7 +21,7 @@
 
       <div class="mb-2">
         <span class="badge bg-info">
-          R$ <%= number_to_currency(component.price, unit: "", delimiter: ".", separator: ",") %>
+          <%= format_currency(component.price) %>
         </span>
       </div>
 

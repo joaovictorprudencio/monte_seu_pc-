@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :computers do
     member do
       patch :create_assemble
+      get :review
+      patch :increment_component
+      delete :decrement_component
     end
   end
 

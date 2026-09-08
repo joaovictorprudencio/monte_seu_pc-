@@ -1,0 +1,136 @@
+<div class="container-fluid py-4">
+  <div class="mb-4">
+    <%= render "components/stepper", current_step: "REVIEW" %>
+    <div class="d-flex justify-content-start mt-3">
+      <%= link_to select_category_path(category: "CASE", computer_id: @computer.id), class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i> Voltar ao Gabinete
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card mb-4">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Componentes Selecionados</h5>
+          <span class="badge bg-primary rounded-pill"><%= @grouped_components.values.sum { |items| items.sum { |i| i[:count] } } %> itens</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="list-group list-group-flush">
+            <% %w[CPU MOTHERBOARD RAM GPU STORAGE SOURCE CASE].each do |category| %>
+              <% items = @grouped_components[category] || [] %>
+              <% if items.any? %>
+                <% items.each do |item| %>
+                  <% component = item[:component] %>
+                  <% count = item[:count] %>
+                  <div class="list-group-item d-flex justify-content-between align-items-center px-4">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        <% if component.image.attached? %>
+                          <%= image_tag component.image, alt: component.name, class: "img-fluid", style: "max-width: 40px; max-height: 40px; object-fit: contain;" %>
+                        <% else %>
+                          <i class="fas fa-cube text-secondary" style="font-size: 1.5rem;"></i>
+                        <% end %>
+                      </div>
+                      <div>
+                        <h6 class="mb-1"><%= component.name %></h6>
+                        <small class="text-muted"><%= component.brand %></small>
+                      </div>
+                    </div>
+                    <div class="text-end">
+                      <span class="fw-bold text-primary fs-6"><%= format_currency(component.price) %></span>
+                      <% if category.in?(["RAM", "STORAGE"]) %>
+                        <div class="d-flex align-items-center justify-content-end gap-2 mt-1">
+                          <%= button_to decrement_component_computer_path(@computer, category: category),
+                              method: :delete,
+                              class: "btn btn-sm btn-outline-danger",
+                              form: { data: { turbo: false } } do %>
+                            <i class="bi bi-dash-lg"></i>
+                          <% end %>
+                          <span class="fw-bold"><%= count %></span>
+                          <%= button_to increment_component_computer_path(@computer, category: category),
+                              method: :patch,
+                              class: "btn btn-sm btn-outline-success",
+                              form: { data: { turbo: false } } do %>
+                            <i class="bi bi-plus-lg"></i>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              <% elsif category.in?(%w[GPU CASE SOURCE]) %>
+                <div class="list-group-item text-muted px-4">
+                  <i class="fas fa-info-circle me-2"></i>
+                  <%= category.humanize %> não selecionado
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">Ações</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex gap-2 flex-wrap">
+            <%= link_to computers_path, class: "btn btn-outline-secondary" do %>
+              <i class="fas fa-times me-1"></i> Cancelar Montagem
+            <% end %>
+            <%= button_to @computer, method: :patch, params: { computer: { status: :completed } }, class: "btn btn-success ms-auto" do %>
+              <i class="fas fa-check me-1"></i> Finalizar Compra
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card sticky-top shadow-sm" style="top: 100px;">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">Resumo do Pedido</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-3">
+            <span class="text-muted">Subtotal (<%= @grouped_components.values.sum { |items| items.sum { |i| i[:count] } } %> itens)</span>
+            <span class="fw-bold"><%= format_currency(@total_price) %></span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between mb-3 fs-5 fw-bold">
+            <span>Total</span>
+            <span class="text-success"><%= format_currency(@total_price) %></span>
+          </div>
+          <div class="alert alert-info small mb-3">
+            <i class="fas fa-info-circle me-1"></i>
+            Frete calculado no checkout. Garantia de 1 ano em todos os componentes.
+          </div>
+          <div class="d-grid gap-2">
+            <%= button_to @computer, method: :patch, params: { computer: { status: :completed } }, class: "btn btn-success btn-lg" do %>
+              <i class="fas fa-lock me-1"></i> Finalizar Pedido
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .list-group-item {
+    border-left: none;
+    border-right: none;
+  }
+  .list-group-item:first-child {
+    border-top: none;
+  }
+  .list-group-item:last-child {
+    border-bottom: none;
+  }
+  @media (max-width: 991.98px) {
+    .sticky-top {
+      position: static !important;
+    }
+  }
+</style>

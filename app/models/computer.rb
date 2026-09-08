@@ -5,12 +5,6 @@ class Computer < ApplicationRecord
   validates :total_price, presence: true
   validates :name, presence: true
   enum :status, { draft: 0, building: 1, completed: 2, cancelled: 3 }
-  normalizes :total_price, with: ->(value) do
-    value.to_s
-         .gsub(/[R$\s]/, "")
-         .gsub(".", "")
-         .gsub(",", ".")
-  end
 
 
 
